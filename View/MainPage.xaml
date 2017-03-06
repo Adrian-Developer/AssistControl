@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AssistControl"
+             x:Class="AssistControl.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--Para poder utilizar el converter es necesario crear una instancia-->
+            <local:AverageToColorConverter x:Key="MyColorCvt"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <StackLayout>
+        <Button Text="Cargar directorio" Command="{Binding LoadDirectoryCommand}"/>
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
+        <ListView x:Name="lvStudents" ItemsSource="{Binding Students}">
+            <!--La Propiedad "ItemTemplate" espera un "DataTemplate"-->
+            <ListView.ItemTemplate>
+                <!--Con el "DataTemplate" se puede definir una estructura de elementos graficos con la cual se representara 
+                cada uno de los elementos de la coleccion que se enlace a este "ListView"-->
+                <DataTemplate>
+                    <ImageCell Text="{Binding Name}" Detail="{Binding Average}" 
+                               TextColor="{Binding Average, Converter={StaticResource Key=MyColorCvt}}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
